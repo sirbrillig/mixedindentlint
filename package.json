@@ -2,7 +2,7 @@
   "name": "mixedindentlint",
   "version": "1.0.0",
   "description": "A general-purpose linter for lines that do not match the indentation style of a file",
-  "main": "index.js",
+  "main": "lib/indent-checker.js",
   "scripts": {
     "test": "mocha"
   },
