@@ -1,0 +1,26 @@
+{
+  "name": "mixedindentlint",
+  "version": "1.0.0",
+  "description": "A general-purpose linter for lines that do not match the indentation style of a file",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sirbrillig/mixedindentlint.git"
+  },
+  "keywords": [
+    "indentation"
+  ],
+  "author": "Payton Swick <payton@foolord.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sirbrillig/mixedindentlint/issues"
+  },
+  "homepage": "https://github.com/sirbrillig/mixedindentlint",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  }
+}
