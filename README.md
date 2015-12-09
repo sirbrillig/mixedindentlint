@@ -41,5 +41,7 @@ Then require it in your code and call the `lint` function, which takes a string 
 
 ```javascript
 var lint = require( 'mixedindentlint' ).lint;
+var fileContents = "  foo\n  bar\n\tbaz";
 var warnings = lint( fileContents ); // Each warning is a line number which doesn't match the indentation of the file
+console.log( warnings ); // Will print [3] because the third line uses a tab and the other two lines use spaces
 ```
