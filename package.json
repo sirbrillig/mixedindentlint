@@ -4,7 +4,7 @@
   "description": "A general-purpose linter for lines that do not match the indentation style of a file",
   "main": "lib/indent-checker.js",
   "scripts": {
-    "test": "mocha"
+    "test": "node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",
