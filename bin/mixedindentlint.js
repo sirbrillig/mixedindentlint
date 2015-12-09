@@ -15,7 +15,12 @@ if ( args[0] === '--version' ) {
 }
 
 var messages = files.reduce( function( warnings, file ) {
-	var input = fs.readFileSync( file, 'utf8' );
+	try {
+		var input = fs.readFileSync( file, 'utf8' );
+	} catch ( err ) {
+		console.error( 'Error trying to read file "' + file + '":', err.message );
+		process.exit( 1 );
+	}
 	var lines = IndentChecker.getLinesWithLessCommonType( input );
 	if ( lines.length > 0 ) warnings[ file ] = lines;
 	return warnings;
