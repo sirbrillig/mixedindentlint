@@ -14,6 +14,12 @@ if ( args[0] === '--version' ) {
 	process.exit( 0 );
 }
 
+if ( files.length < 1 ) {
+	console.log( 'No files to lint' );
+	console.log( 'Usage: mixedindentlint <file1> [<file2>...]' );
+	process.exit( 0 );
+}
+
 var messages = files.reduce( function( warnings, file ) {
 	try {
 		var input = fs.readFileSync( file, 'utf8' );
