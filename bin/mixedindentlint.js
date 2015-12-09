@@ -23,7 +23,7 @@ var messages = files.reduce( function( warnings, file ) {
 
 Object.keys( messages ).map( function( file ) {
 	messages[ file ].map( function( line ) {
-		console.log( 'Line ' + line + ' in ' + file + ' has indentation that differs from the rest of the file.' );
+		console.log( 'Line ' + line + ' in "' + file + '" has indentation that differs from the rest of the file.' );
 	} );
 } );
 
