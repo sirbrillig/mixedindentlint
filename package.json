@@ -25,5 +25,8 @@
   },
   "bin": {
     "mixedindentlint": "bin/mixedindentlint.js"
+  },
+  "dependencies": {
+    "minimist": "^1.2.0"
   }
 }

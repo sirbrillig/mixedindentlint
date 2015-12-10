@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 
 var fs = require( 'fs' );
+var parseArgs = require( 'minimist' );
 var IndentChecker = require( '../lib/indent-checker' );
 
-var args = process.argv.slice( 2 );
-var files = args.filter( function( arg ) {
-	return arg.substr( 0, 2 ) !== '--';
-} );
+var argv = parseArgs( process.argv.slice( 2 ) );
+var files = argv._;
 
-if ( args[0] === '--version' ) {
+if ( argv.version ) {
 	var version = require( '../package.json' ).version;
 	console.log( 'mixedindentlint version ' + version );
 	process.exit( 0 );
@@ -16,7 +15,9 @@ if ( args[0] === '--version' ) {
 
 if ( files.length < 1 ) {
 	console.log( 'No files to lint' );
-	console.log( 'Usage: mixedindentlint <file1> [<file2>...]' );
+	console.log( 'Usage: mixedindentlint [options] <file1> [<file2>...]' );
+	console.log( 'Options:' );
+	console.log( '  --version\t\tPrint the current version.' );
 	process.exit( 0 );
 }
 
