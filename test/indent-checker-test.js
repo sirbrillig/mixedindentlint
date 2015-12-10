@@ -83,4 +83,16 @@ describe( "IndentChecker", function() {
 			expect( IndentChecker.getLinesWithLessCommonType( input ) ).to.have.same.members( [ 6 ] );
 		} );
 	} );
+
+	describe( ".lint()", function() {
+		it( "returns an array of line numbers with the less-common indentation type from the input", function() {
+			var input = "  foobar1\n  foobar2\n\tfoobar3\n  foobar4\n\tfoobar5";
+			expect( IndentChecker.lint( input ) ).to.have.same.members( [ 3, 5 ] );
+		} );
+
+		it( "returns an array of line numbers without the specified indentation type from the input, if set", function() {
+			var input = "  foobar1\n  foobar2\n\tfoobar3\n  foobar4\n\tfoobar5";
+			expect( IndentChecker.lint( input, { indent: 'tabs' } ) ).to.have.same.members( [ 1, 2, 4 ] );
+		} );
+	} );
 } );
