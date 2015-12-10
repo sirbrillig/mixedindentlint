@@ -45,3 +45,15 @@ var fileContents = "  foo\n  bar\n\tbaz";
 var warnings = lint( fileContents ); // Each warning is a line number which doesn't match the indentation of the file
 console.log( warnings ); // Will print [3] because the third line uses a tab and the other two lines use spaces
 ```
+
+# Use in Editors
+
+You can automatically use mixedindentlint in your favorite editor with a plugin.
+
+## Atom
+
+For the excellent [Atom](https://atom.io/) editor, install the [linter-mixed-indent](https://github.com/sirbrillig/linter-mixed-indent) plugin.
+
+## Vim
+
+For vim, install mixedindentlint globally on your system as described above, then install the [Syntastic](https://github.com/scrooloose/syntastic/) plugin. Synatastic is filetype-specific, so mixedindentlint will only run on JavaScript, CSS, and SCSS files currently. You may need to configure Syntastic to activate the plugin.
