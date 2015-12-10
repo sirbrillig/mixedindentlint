@@ -7,11 +7,13 @@ var IndentChecker = require( '../lib/indent-checker' );
 var argv = parseArgs( process.argv.slice( 2 ), {
 	boolean: [
 		'version',
+		'ignore-comments',
 		'spaces',
 		'tabs'
 	],
 	default: {
 		version: null,
+		'ignore-comments': null,
 		spaces: null,
 		tabs: null
 	}
@@ -29,6 +31,7 @@ if ( files.length < 1 ) {
 	console.log( 'Usage: mixedindentlint [options] <file1> [<file2>...]' );
 	console.log( 'Options:' );
 	console.log( '  --version\t\tPrint the current version.' );
+	console.log( '  --ignore-comments\t\tIgnore anything identified as a comment line.' );
 	console.log( '  --spaces\t\tAssume all files should use spaces rather than the most common indentation.' );
 	console.log( '  --tabs\t\tAssume all files should use tabs rather than the most common indentation.' );
 	process.exit( 0 );
@@ -42,7 +45,8 @@ var messages = files.reduce( function( warnings, file ) {
 		process.exit( 1 );
 	}
 	var lintOptions = {
-		indent: null
+		indent: null,
+		comments: argv[ 'ignore-comments' ]
 	};
 	if ( argv.spaces ) {
 		lintOptions.indent = 'spaces';

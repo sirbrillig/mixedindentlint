@@ -90,9 +90,19 @@ describe( "IndentChecker", function() {
 			expect( IndentChecker.lint( input ) ).to.have.same.members( [ 3, 5 ] );
 		} );
 
-		it( "returns an array of line numbers without the specified indentation type from the input, if set", function() {
+		it( "returns an array of line numbers without the specified indentation type from the input, if option is set", function() {
 			var input = "  foobar1\n  foobar2\n\tfoobar3\n  foobar4\n\tfoobar5";
 			expect( IndentChecker.lint( input, { indent: 'tabs' } ) ).to.have.same.members( [ 1, 2, 4 ] );
+		} );
+
+		it( "returns an array of line numbers including comments", function() {
+			var input = "\tfoobar1\n  /** foobar2\n  * foobar3\n  * foobar4\n  */\n foobar6\n  // foobar7\n\tfoobar8";
+			expect( IndentChecker.lint( input ) ).to.have.same.members( [ 1, 8 ] );
+		} );
+
+		it( "returns an array of line numbers ignoring comments, if option is set", function() {
+			var input = "\tfoobar1\n  /** foobar2\n  * foobar3\n  * foobar4\n  */\n foobar6\n  // foobar7\n\tfoobar8";
+			expect( IndentChecker.lint( input, { comments: true } ) ).to.have.same.members( [ 6 ] );
 		} );
 	} );
 } );
