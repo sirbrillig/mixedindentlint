@@ -57,3 +57,15 @@ For the excellent [Atom](https://atom.io/) editor, install the [linter-mixed-ind
 ## Vim
 
 For vim, install mixedindentlint globally on your system as described above, then install the [Syntastic](https://github.com/scrooloose/syntastic/) plugin. Synatastic is filetype-specific, so mixedindentlint will only run on JavaScript, CSS, and SCSS files currently. You may need to configure Syntastic to activate the plugin.
+
+# Options
+
+Rather than scanning each file for the most common type of indentation and then reporting lines which differ (the default behavior), it is possible to specify the style of indentation which the file should have.
+
+On the command-line, this is done with the `--spaces` or `--tabs` options. So the following command will return the line numbers of each line in myFile.js that was NOT indented with tabs:
+
+`mixedindentlint --tabs myFile.js`
+
+Using the node module this is done by passing the `indent` option to `lint()`. Therefore, the following line will return the line numbers of each line in `input` that was NOT indented with spaces:
+
+`lint( input, { indent: 'spaces' } );`
