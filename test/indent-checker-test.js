@@ -109,7 +109,7 @@ describe( 'IndentChecker', function() {
 		} );
 
 		it( 'returns an array of line numbers ignoring comments, if option is set', function() {
-			var input = '\tfoobar1\n  /** foobar2\n  * foobar3\n  * foobar4\n  */foobar5\n foobar6\n  // foobar7\n\tfoobar8';
+			var input = '\tfoobar1\n  /** foobar2\n  * foobar3\n  foobar4\n  */foobar5\n foobar6\n  // foobar7\n\tfoobar8';
 			expect( IndentChecker.lint( input, { comments: true } ) ).to.have.same.members( [ 6 ] );
 		} );
 	} );
