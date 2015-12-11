@@ -60,6 +60,8 @@ For vim, install mixedindentlint globally on your system as described above, the
 
 # Options
 
+## Force indentation type
+
 Rather than scanning each file for the most common type of indentation and then reporting lines which differ (the default behavior), it is possible to specify the style of indentation which the file should have.
 
 On the command-line, this is done with the `--spaces` or `--tabs` options. So the following command will return the line numbers of each line in myFile.js that was NOT indented with tabs:
@@ -69,3 +71,14 @@ On the command-line, this is done with the `--spaces` or `--tabs` options. So th
 Using the node module this is done by passing the `indent` option to `lint()`. Therefore, the following line will return the line numbers of each line in `input` that was NOT indented with spaces:
 
 `lint( input, { indent: 'spaces' } );`
+
+## Ignore comments
+
+By default, mixedindentlint will report mixed indentation for all the lines of a file, including code comments. It is possible to ignore comment lines altogether, however.
+
+On the command-line, using the `--ignore-comments` option will prevent scanning lines that mixedindentlint thinks are comments. If you find a type of comment that is still scanned, please open an issue to report it.
+
+Using the node module this is done by passing the `comments` option to `lint()`. The following example will return lines of input that have incorrect indentation while completely ignoring comments.
+
+`lint( input, { comments: true } );`
+
