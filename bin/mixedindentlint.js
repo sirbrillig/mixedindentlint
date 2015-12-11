@@ -1,8 +1,17 @@
 #!/usr/bin/env node
 
 var fs = require( 'fs' );
+var path = require( 'path' );
 var parseArgs = require( 'minimist' );
 var IndentChecker = require( '../lib/indent-checker' );
+
+function isFileIgnored( file, excludeList ) {
+	if ( ~ excludeList.indexOf( file ) ) return true;
+	if ( ~ excludeList.indexOf( path.basename( file ) ) ) return true;
+	return excludeList.some( function( excludeFile ) {
+		return ( path.normalize( excludeFile ) === path.normalize( file ) );
+	} );
+}
 
 var argv = parseArgs( process.argv.slice( 2 ), {
 	boolean: [
@@ -34,10 +43,16 @@ if ( files.length < 1 ) {
 	console.log( '  --ignore-comments\t\tIgnore anything identified as a comment line.' );
 	console.log( '  --spaces\t\tAssume all files should use spaces rather than the most common indentation.' );
 	console.log( '  --tabs\t\tAssume all files should use tabs rather than the most common indentation.' );
+	console.log( '  --exclude=<file>\t\tDo not scan <file> even if it is listed. Useful when passing a blob. Can be used multiple times.' );
 	process.exit( 0 );
 }
 
+if ( argv.exclude && ! Array.isArray( argv.exclude ) ) {
+	argv.exclude = [ argv.exclude ];
+}
+
 var messages = files.reduce( function( warnings, file ) {
+	if ( argv.exclude && isFileIgnored( file, argv.exclude ) ) return warnings;
 	try {
 		var input = fs.readFileSync( file, 'utf8' );
 	} catch ( err ) {
