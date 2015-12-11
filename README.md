@@ -82,3 +82,10 @@ Using the node module this is done by passing the `comments` option to `lint()`.
 
 `lint( input, { comments: true } );`
 
+## Exclude file
+
+This is an option that only exists on the command-line tool. Since you can pass a blob or a group of files to `mixedindentlint`, there may be files you want to skip. For each of these files you can specify either the file name or the full path name to the file with the `--exclude` option.
+
+For example, if you wanted to scan all the JavaScript files in the directory `src` except for `src/config.js` and `src/data/input.js`, you could run the following command:
+
+`mixedindentlint --exclude=config.js --exclude=src/data/input.js src/*.js`
