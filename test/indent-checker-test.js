@@ -21,12 +21,20 @@ describe( 'IndentChecker', function() {
 			expect( IndentChecker.getLineType( '\n' ) ).to.equal( 'none' );
 		} );
 
-		it( 'returns "none" when the input starts a comment block', function() {
-			expect( IndentChecker.getLineType( '/**' ) ).to.equal( 'none' );
+		it( 'returns "spaces" when the input starts with a space and a multiline comment block starter', function() {
+			expect( IndentChecker.getLineType( ' /**' ) ).to.equal( 'spaces' );
 		} );
 
-		it( 'returns "none" when the input ends a comment block', function() {
-			expect( IndentChecker.getLineType( ' */' ) ).to.equal( 'none' );
+		it( 'returns "spaces" when the input starts with a space and a comment block', function() {
+			expect( IndentChecker.getLineType( ' //' ) ).to.equal( 'spaces' );
+		} );
+
+		it( 'returns "spaces" when the input starts with a space and a multiline comment block terminator', function() {
+			expect( IndentChecker.getLineType( ' */' ) ).to.equal( 'spaces' );
+		} );
+
+		it( 'returns "none" when the input starts a comment block', function() {
+			expect( IndentChecker.getLineType( '/**' ) ).to.equal( 'none' );
 		} );
 	} );
 
@@ -96,12 +104,12 @@ describe( 'IndentChecker', function() {
 		} );
 
 		it( 'returns an array of line numbers including comments', function() {
-			var input = '\tfoobar1\n  /** foobar2\n  * foobar3\n  * foobar4\n  */\n foobar6\n  // foobar7\n\tfoobar8';
-			expect( IndentChecker.lint( input ) ).to.have.same.members( [ 1, 8 ] );
+			var input = '\tfoobar1\n  /** foobar2\n  * foobar3\n  * foobar4\n  */foobar5\n foobar6\n\t// foobar7\n\tfoobar8';
+			expect( IndentChecker.lint( input ) ).to.have.same.members( [ 1, 7, 8 ] );
 		} );
 
 		it( 'returns an array of line numbers ignoring comments, if option is set', function() {
-			var input = '\tfoobar1\n  /** foobar2\n  * foobar3\n  * foobar4\n  */\n foobar6\n  // foobar7\n\tfoobar8';
+			var input = '\tfoobar1\n  /** foobar2\n  * foobar3\n  * foobar4\n  */foobar5\n foobar6\n  // foobar7\n\tfoobar8';
 			expect( IndentChecker.lint( input, { comments: true } ) ).to.have.same.members( [ 6 ] );
 		} );
 	} );
