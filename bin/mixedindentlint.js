@@ -3,6 +3,7 @@
 var fs = require( 'fs' );
 var path = require( 'path' );
 var parseArgs = require( 'minimist' );
+var globby = require( 'globby' );
 var IndentChecker = require( '../lib/indent-checker' );
 
 function isFileIgnored( file, excludeList ) {
@@ -27,7 +28,7 @@ var argv = parseArgs( process.argv.slice( 2 ), {
 		tabs: null
 	}
 } );
-var files = argv._;
+var files = globby.sync( argv._ );
 
 if ( argv.version ) {
 	var version = require( '../package.json' ).version;
