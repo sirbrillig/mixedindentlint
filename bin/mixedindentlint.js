@@ -3,15 +3,8 @@
 var fs = require( 'fs' );
 var path = require( 'path' );
 var parseArgs = require( 'minimist' );
+var globby = require( 'globby' );
 var IndentChecker = require( '../lib/indent-checker' );
-
-function isFileIgnored( file, excludeList ) {
-	if ( ~ excludeList.indexOf( file ) ) return true;
-	if ( ~ excludeList.indexOf( path.basename( file ) ) ) return true;
-	return excludeList.some( function( excludeFile ) {
-		return ( path.normalize( excludeFile ) === path.normalize( file ) );
-	} );
-}
 
 var argv = parseArgs( process.argv.slice( 2 ), {
 	boolean: [
@@ -27,7 +20,16 @@ var argv = parseArgs( process.argv.slice( 2 ), {
 		tabs: null
 	}
 } );
-var files = argv._;
+
+// --exclude is redundant now, it's equivalent to put a file pattern with a "!" at the start. Keep backwards-compatibility:
+if ( argv.exclude ) {
+	if ( ! Array.isArray( argv.exclude ) ) {
+		argv.exclude = [ argv.exclude ];
+	}
+	argv._ = argv._.concat( argv.exclude.map( function( file ) { return '!' + file; } ) );
+}
+
+var files = globby.sync( argv._ );
 
 if ( argv.version ) {
 	var version = require( '../package.json' ).version;
@@ -47,12 +49,7 @@ if ( files.length < 1 ) {
 	process.exit( 0 );
 }
 
-if ( argv.exclude && ! Array.isArray( argv.exclude ) ) {
-	argv.exclude = [ argv.exclude ];
-}
-
 var messages = files.reduce( function( warnings, file ) {
-	if ( argv.exclude && isFileIgnored( file, argv.exclude ) ) return warnings;
 	try {
 		var input = fs.readFileSync( file, 'utf8' );
 	} catch ( err ) {
